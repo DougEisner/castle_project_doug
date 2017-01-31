@@ -3,11 +3,12 @@
 Online castle project management. Create, Read, Update, Destroy.
 
 ##Gems:
-* `pg`
-* `sinatra`
 * `activerecord`
-* `thin`
+* `pg`
 * `rack-test`
+* `sinatra`
+* `thin`
+
 
 	[http://rubygems.org](http://rubygems.org)
 

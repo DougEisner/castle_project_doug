@@ -42,3 +42,7 @@ delete '/api/projects/:id' do |id|
     status 200
   end
 end
+
+get '/api/projects/status' do
+  Project.order(status: params[:status]).to_json
+end
