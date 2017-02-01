@@ -1,8 +1,27 @@
 require 'sinatra'
 require_relative 'models/task'
 
-get '/api/tasks' do
-  Task.all.to_json
+get '/api/tasks/filter' do
+  status = params[:status]
+  if status == 'true'
+    tasks = Task.where('status = true')
+  elsif status == 'false'
+    tasks = Task.where('status = false')
+  else
+    tasks = Task.all
+  end
+
+  priority = params[:priority]
+  unless priority.nil?
+    tasks = tasks.where("priority = #{priority}")
+  end
+
+  name = params[:name]
+  unless name.nil?
+    tasks = tasks.where("LOWER(name) LIKE ?", "%#{name}%")
+  end
+
+  tasks.order(priority: :desc).to_json
 end
 
 get '/api/tasks/:id' do |id|
@@ -10,7 +29,6 @@ get '/api/tasks/:id' do |id|
   if task.nil?
     status 404
   else
-    status 200
     task.to_json
   end
 end
@@ -27,8 +45,6 @@ put '/api/tasks/:id' do |id|
     status 404
   else
     task.update(status: params[:status])
-    # task.update(params) # TODO: does this work? what about nils?
-    status 200
     task.to_json
   end
 end
@@ -39,6 +55,5 @@ delete '/api/tasks/:id' do |id|
     status 404
   else
     Task.destroy(id)
-    status 200
   end
 end

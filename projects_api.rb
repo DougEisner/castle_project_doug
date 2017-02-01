@@ -11,7 +11,7 @@ get '/api/projects/:id' do |id|
     status 404
   else
     status 200
-    project.to_json
+    project.tasks.to_json  #get all tasks for this project
   end
 end
 

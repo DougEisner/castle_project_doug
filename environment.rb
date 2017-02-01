@@ -5,6 +5,6 @@ ActiveRecord::Base.establish_connection(
   adapter:  'postgresql',
   host:     'localhost',
   database: 'tasks_db',
-  username: 'thomas',
+  username: 'DougEisner',
   password: ''
 )
